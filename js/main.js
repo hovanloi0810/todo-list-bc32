@@ -9,6 +9,7 @@ dom("#addItem").addEventListener("click", () => {
         const task = new Task(taskContent);
         taskManager.addTask(task);
         render("#todo");
+        clearForm();
     }
 })
 
@@ -73,6 +74,28 @@ function render(taskSelect, check = true) {
         }, "");
     }
     dom(taskSelect).innerHTML = html;
+}
+
+dom("#two").addEventListener("click", () => {
+    taskManager.taskList.sort((a, b) => {
+        let textA = a.content.toUpperCase();
+        let textB = b.content.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    })
+    render("#todo");
+})
+
+dom("#three").addEventListener("click", () => {
+    taskManager.taskList.sort((a, b) => {
+        let textA = a.content.toUpperCase();
+        let textB = b.content.toUpperCase();
+        return (textA > textB) ? -1 : (textA > textB) ? 1 : 0;
+    })
+    render("#todo");
+})
+
+function clearForm() {
+    dom("#newTask").value = "";
 }
 
 // Helper function
