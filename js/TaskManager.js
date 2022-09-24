@@ -18,12 +18,8 @@ class TaskManager {
   }
 
   deleteTask(taskID) {
-    const index = this.taskList.findIndex((task, index) => {
-      return index === +taskID;
-    });
-
-    if (index !== -1) {
-      this.taskList.splice(index, 1);
-    }
+    this.taskList = this.taskList.filter((task, index) => {
+      return index !== +taskID;
+    })
   }
 }

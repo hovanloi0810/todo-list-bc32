@@ -1,5 +1,5 @@
 const taskManager = new TaskManager();
-const taskComplete = [];
+let taskComplete = [];
 
 dom("#addItem").addEventListener("click", () => {
     let taskContent = dom("#newTask").value;
@@ -17,11 +17,17 @@ function deleteTask(taskID) {
     render("#todo");
 }
 
+function deleteTaskComplete(taskID) {
+    taskComplete = taskComplete.filter((task, index) => {
+        return index !== +taskID;
+    })
+    render("#completed", null);
+}
+
 function checkedTask(taskID) {
     const task = taskManager.selectTask(taskID);
     taskComplete.push(task);
     taskManager.deleteTask(taskID);
-
     render("#todo");
     render("#completed", null);
 }
@@ -38,12 +44,10 @@ function render(taskSelect, check = true) {
                     <span> ${task.content}</span> 
                     <div class="wrapper">
                         <i 
-                        class="icon fa-solid fa-trash-can" onclick="deleteTask('${index}')"></i>
+                        class="icon fa-solid fa-trash-can" onclick="deleteTaskComplete('${index}')"></i>
     
                         <span><i 
-                        id="check"
-                        class="icon fa-solid fa-circle-check" 
-                        onclick="checkedTask('${index}')"></i></span>
+                        class="icon fa-solid fa-circle-check"></i></span>
                     </div>
                 </li>
             `
